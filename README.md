@@ -63,3 +63,5 @@ TL280 uses two communication methods:
 
    On every event TL280 uses a custom TCP binary protocol to notify integration server.
    There is no publicly available documentation for it and communication gets encrypted after exchanging few packets.
+
+   See [NOTIFICATION](NOTIFICATION.md) for basic [RE](https://en.wikipedia.org/wiki/Reverse_engineering)-based documentation.
