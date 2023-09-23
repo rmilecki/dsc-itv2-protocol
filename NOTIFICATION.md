@@ -67,7 +67,10 @@ struct msg_00_00_hello {
 	uint16_t	type;			/* 0x00 0x00 */
 	uint8_t		unk1[2];
 	uint8_t		seq;			/* Message sequence number? */
-	uint8_t		unk[14];
+	uint8_t		unk2[3];
+	uint16_t	firmware_version;	/* E.g. 0x04 0x11 for 4.17 */
+	uint16_t	protocol_version;	/* E.g. 0x02 0x11 for 2.17 */
+	uint8_t		unk[7];
 	uint16_t	crc16;
 } __packed;
 ```
