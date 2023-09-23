@@ -174,7 +174,7 @@ sequenceDiagram
     Server->>TL280: 02 01 (Server's empty message)
     TL280->>Server: 02 02 (TL280's encryption request)
     Server->>TL280: Encrypted
-    TL280->>Server: 02 03
+    TL280->>Server: 02 03 (TL280's empty message)
     Server->>TL280: Encrypted
     TL280->>Server: Encrypted
     Server->>TL280: Encrypted
