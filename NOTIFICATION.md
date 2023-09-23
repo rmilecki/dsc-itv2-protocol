@@ -95,7 +95,7 @@ Message gets `7e` byte prepended and `7f` byte appended.
 struct msg_00_00_tl280_hello {
 	uint8_t		length;			/* 0x15 == 21 */
 	uint16_t	type;			/* 0x00 0x00 */
-	uint8_t		unk1[2];
+	uint8_t		unk1[2];		/* Seems to be always 0x06 0x0a */
 	uint8_t		seq;			/* Message sequence number? */
 	uint8_t		unk2[3];
 	uint16_t	firmware_version;	/* E.g. 0x04 0x11 for 4.17 */
@@ -111,7 +111,35 @@ struct msg_00_00_tl280_hello {
 struct msg_01_00_tl280_hello_reply {
 	uint8_t		length;			/* 0x08 == 8 */
 	uint16_t	type;			/* 0x01 0x00 */
-	uint8_t		unk[2];
+	uint8_t		unk[2];			/* Seems to be always 0x05 0x02 */
+	uint8_t		seq;			/* Matches seq from 00 00 (request message sequence number?) */
+	uint8_t		unused;			/* Unused? Seems to be always 0x00 */
+	uint16_t	crc16;
+} __packed;
+```
+
+### `02 00`: Server's hello
+
+```c
+struct msg_02_00_server_hello {
+	uint8_t		length;			/* 0x15 == 21 */
+	uint16_t	type;			/* 0x20 0x10 */
+	uint8_t		unk1[2];		/* Seems to be always 0x06 0x0a */
+	uint8_t		seq;			/* Message sequence number? Seems always 0x01 */
+	uint8_t		unk2[5];
+	uint16_t	protocol_version;	/* E.g. 0x02 0x11 for 2.17 */
+	uint8_t		unk[7];
+	uint16_t	crc16;
+} __packed;
+```
+
+### `01 00`: Server's hello reply
+
+```c
+struct msg_01_02_server_hello_reply {
+	uint8_t		length;			/* 0x08 == 8 */
+	uint16_t	type;			/* 0x01 0x20 */
+	uint8_t		unk[2];			/* Seems to be always 0x05 0x02 */
 	uint8_t		seq;			/* Matches seq from 00 00 (request message sequence number?) */
 	uint8_t		unused;			/* Unused? Seems to be always 0x00 */
 	uint16_t	crc16;
