@@ -56,3 +56,27 @@ Message gets `7e` byte prepended and `7f` byte appended.
 * `04`: Length
 * `02 01`: Message type
 * `66 1f`: CRC-16 checksum
+
+## Example notification messages
+
+```mermaid
+sequenceDiagram
+    participant TL280
+    participant Server
+    TL280->>Server: 00 00
+    Server->>TL280: 01 00
+    TL280->>Server: 00 01
+    Server->>TL280: 02 00
+    TL280->>Server: 01 02
+    Server->>TL280: 02 01
+    TL280->>Server: 02 02
+    Server->>TL280: Encrypted
+    TL280->>Server: 02 03
+    Server->>TL280: Encrypted
+    TL280->>Server: Encrypted
+    Server->>TL280: Encrypted
+    TL280->>Server: Encrypted
+    Server->>TL280: Encrypted
+    TL280->>Server: Encrypted
+    Server->>TL280: Encrypted
+```
