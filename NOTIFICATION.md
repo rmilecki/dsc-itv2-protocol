@@ -35,6 +35,7 @@ Message gets `7e` byte prepended and `7f` byte appended.
 
 ## Message format
 
+* The first byte specifies message length.
 * Two last bytes contain CRC-16/CCITT-FALSE checksum.
 
 ### Message examples
@@ -43,10 +44,12 @@ Message gets `7e` byte prepended and `7f` byte appended.
 0000   08 01 00 05 02 91 00 de 3c                        ~........<
 ```
 
+* `08`: Length
 * `de 3c`: CRC-16 checksum
 
 ```
 0000   04 02 01 66 1f                                    ~...f.
 ```
 
+* `04`: Length
 * `66 1f`: CRC-16 checksum
