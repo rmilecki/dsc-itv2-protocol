@@ -32,3 +32,21 @@ Message gets `7e` byte prepended and `7f` byte appended.
 * `7e`: Start of message
 * `04 02 01 66 1f`: Actual message
 * `7e`: End of message
+
+## Message format
+
+* Two last bytes contain CRC-16/CCITT-FALSE checksum.
+
+### Message examples
+
+```
+0000   08 01 00 05 02 91 00 de 3c                        ~........<
+```
+
+* `de 3c`: CRC-16 checksum
+
+```
+0000   04 02 01 66 1f                                    ~...f.
+```
+
+* `66 1f`: CRC-16 checksum
