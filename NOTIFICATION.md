@@ -57,6 +57,30 @@ Message gets `7e` byte prepended and `7f` byte appended.
 * `02 01`: Message type
 * `66 1f`: CRC-16 checksum
 
+## Message types
+
+### `00 00`: Hello?
+
+```c
+struct msg_00_00_hello {
+	uint8_t		length;			/* 0x15 == 21 */
+	uint16_t	type;			/* 0x00 0x00 */
+	uint8_t		unk[17];
+	uint16_t	crc16;
+} __packed;
+```
+
+### `01 00`: Hello reply?
+
+```c
+struct msg_01_00_hello_reply {
+	uint8_t		length;			/* 0x08 == 8 */
+	uint16_t	type;			/* 0x01 0x00 */
+	uint8_t		unk[4];
+	uint16_t	crc16;
+} __packed;
+```
+
 ## Example notification messages
 
 ```mermaid
