@@ -65,7 +65,9 @@ Message gets `7e` byte prepended and `7f` byte appended.
 struct msg_00_00_hello {
 	uint8_t		length;			/* 0x15 == 21 */
 	uint16_t	type;			/* 0x00 0x00 */
-	uint8_t		unk[17];
+	uint8_t		unk1[2];
+	uint8_t		seq;			/* Message sequence number? */
+	uint8_t		unk[14];
 	uint16_t	crc16;
 } __packed;
 ```
@@ -76,7 +78,9 @@ struct msg_00_00_hello {
 struct msg_01_00_hello_reply {
 	uint8_t		length;			/* 0x08 == 8 */
 	uint16_t	type;			/* 0x01 0x00 */
-	uint8_t		unk[4];
+	uint8_t		unk[2];
+	uint8_t		seq;			/* Matches seq from 00 00 (request message sequence number?) */
+	uint8_t		unused;			/* Unused? Seems to be always 0x00 */
 	uint16_t	crc16;
 } __packed;
 ```
