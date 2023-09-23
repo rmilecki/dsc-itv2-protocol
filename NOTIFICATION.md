@@ -146,6 +146,20 @@ struct msg_01_02_server_hello_reply {
 } __packed;
 ```
 
+### `02 02`: TL280's encryption request
+
+```c
+struct msg_02_02_tl280_enc_req {
+	uint8_t		length;			/* 0x38 == 56 */
+	uint16_t	type;			/* 0x02 0x02 */
+	uint8_t		unk1[2];		/* Seems to be always 0x06 0x0e */
+	uint8_t		seq;			/* Message sequence number */
+	uint8_t		unk2;			/* Seems to be always 0x30 */
+	uint8_t		unk3[48];
+	uint16_t	crc16;
+} __packed;
+```
+
 ## Example notification messages
 
 ```mermaid
@@ -158,7 +172,7 @@ sequenceDiagram
     Server->>TL280: 02 00 (Server's hello)
     TL280->>Server: 01 02 (Server's hello reply)
     Server->>TL280: 02 01 (Server's empty message)
-    TL280->>Server: 02 02
+    TL280->>Server: 02 02 (TL280's encryption request)
     Server->>TL280: Encrypted
     TL280->>Server: 02 03
     Server->>TL280: Encrypted
