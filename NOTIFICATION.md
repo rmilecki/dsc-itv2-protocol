@@ -5,6 +5,36 @@ Actual messages can be send in a raw binary format or encrypted.
 Encryption algorithm is probably AES with 128 b key size.
 It remains unknown how to obtain a key.
 
+## Messages exchange
+
+It seems that sides (TL280 and integration server) take turns in sending request messages.
+
+Example exchange:
+
+### TL280's turn
+
+1. TL280 sends its basic info / hello packet
+2. Server replies to above
+3. TL280 sends empty message letting server proceed
+
+### Server's turn
+
+4. Server send its basic info / hello packet
+5. TL280 replies to above
+6. Server sends empty message letting TL280 proceed
+
+### TL280's turn
+
+7. TL280 requests encryption
+8. Server replies to above (**encrypted**)
+9. TL280 sends empty message letting server proceed
+
+### Server's turn
+
+10. Server requests encryption (**encrypted**)
+11. TL280 replies to above (**encrypted**)
+12. Server sends empty message letting TL280 proceed (**encrypted**)
+
 ## Messages encapsulation
 
 All ITv2 messages are encapsulated before sending.
@@ -59,10 +89,10 @@ Message gets `7e` byte prepended and `7f` byte appended.
 
 ## Message types
 
-### `00 00`: Hello?
+### `00 00`: TR280's hello
 
 ```c
-struct msg_00_00_hello {
+struct msg_00_00_tl280_hello {
 	uint8_t		length;			/* 0x15 == 21 */
 	uint16_t	type;			/* 0x00 0x00 */
 	uint8_t		unk1[2];
@@ -75,10 +105,10 @@ struct msg_00_00_hello {
 } __packed;
 ```
 
-### `01 00`: Hello reply?
+### `01 00`: TR280's hello reply
 
 ```c
-struct msg_01_00_hello_reply {
+struct msg_01_00_tl280_hello_reply {
 	uint8_t		length;			/* 0x08 == 8 */
 	uint16_t	type;			/* 0x01 0x00 */
 	uint8_t		unk[2];
@@ -94,12 +124,12 @@ struct msg_01_00_hello_reply {
 sequenceDiagram
     participant TL280
     participant Server
-    TL280->>Server: 00 00
-    Server->>TL280: 01 00
-    TL280->>Server: 00 01
-    Server->>TL280: 02 00
-    TL280->>Server: 01 02
-    Server->>TL280: 02 01
+    TL280->>Server: 00 00 (TL280's hello)
+    Server->>TL280: 01 00 (TL280's hello reply)
+    TL280->>Server: 00 01 (TL280's empty message)
+    Server->>TL280: 02 00 (Server's hello)
+    TL280->>Server: 01 02 (Server's hello reply)
+    Server->>TL280: 02 01 (Server's empty message)
     TL280->>Server: 02 02
     Server->>TL280: Encrypted
     TL280->>Server: 02 03
