@@ -40,6 +40,7 @@ Example exchange:
 All ITv2 messages are encapsulated before sending.
 TL280 outgoing messages are additionally prepended with 12 B string containing integration ID value (TL280 unique number).
 Message gets `7e` byte prepended and `7f` byte appended.
+Every occurence of `7d` gets replaced by `7d 00`, `7e` by `7d 01` and `7f` by `7d 02`.
 
 ### Outgoing packet example
 
